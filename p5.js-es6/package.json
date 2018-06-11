@@ -1,0 +1,37 @@
+{
+  "name": "p5.js-es6-babel-sass-webpack-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for writing p5.js sketches in es6 with babel, webpack and sass.",
+  "scripts": {
+    "clean": "rimraf dist",
+    "dev": "webpack-dev-server --progress --colors --inline --hot --open",
+    "prebuild": "npm install",
+    "build": "npm run clean && webpack --progress --colors -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mkontogiannis/p5.js-es6-babel-sass-webpack-boilerplate.git"
+  },
+  "author": "Michael Kontogiannis <mike@kontogiannis.io> (http://m.kontogiannis.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkontogiannis/p5.js-es6-boilerplate/issues"
+  },
+  "homepage": "https://github.com/mkontogiannis/p5.js-es6-boilerplate#README",
+  "dependencies": {
+    "p5": "0.5.14"
+  },
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-preset-env": "1.6.0",
+    "copy-webpack-plugin": "4.1.0",
+    "css-loader": "0.28.7",
+    "node-sass": "4.5.3",
+    "rimraf": "2.6.2",
+    "sass-loader": "6.0.6",
+    "style-loader": "0.18.2",
+    "webpack": "3.6.0",
+    "webpack-dev-server": "2.9.1"
+  }
+}
