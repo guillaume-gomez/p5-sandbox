@@ -5,6 +5,8 @@ import '../css/style.scss';
 // basic demo
 const moltenBarChart = p => {
   let canvas;
+  const width = 580;
+  const height = 150;
   const xspacing = 16;   // How far apart should each horizontal location be spaced
   let w;              // Width of entire wave
   const maxwaves = 4;   // total # of waves to add together
@@ -27,18 +29,17 @@ const moltenBarChart = p => {
   };
 
   p.setup = () => {
-    canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-    size(580, 150);
+    canvas = p.createCanvas(width, height);
     //frameRate(24);
-    colorMode(RGB,255,255,255,100);
+    p.colorMode(p.RGB, 255, 255, 255, 100);
     //background(0);
-    smooth();
-    w = width+16;
+    p.smooth();
+    w = width + 16;
 
     for (let i = 0; i < maxwaves; i++) {
-      amplitude[i] = random(20,30);
-      let period = random(100,300); // How many pixels before the wave repeats
-      dx[i] = (TWO_PI / period) * xspacing;
+      amplitude[i] = p.random(20,30);
+      let period = p.random(100,300); // How many pixels before the wave repeats
+      dx[i] = (p.TWO_PI / period) * xspacing;
     }
 
     last = [];
@@ -48,26 +49,26 @@ const moltenBarChart = p => {
   };
 
   p.draw = () => {
-    pos = constrain(mouseX, 75, width-75);
+    pos = p.constrain(p.mouseX, 75, width-75);
     rel = 1 - ((pos - 75) / (width - 150));
 
     //background(0);
-    fill(0, 10 + ((1 - rel) * 100));
-    rect(0, 0, width, height);
+    p.fill(0, 10 + ((1 - rel) * 100));
+    p.rect(0, 0, width, height);
 
     //numLines = idealLines + ((1 - rel) * idealLines);
     //xspacing = idealSpacing - (((1 - rel) * idealSpacing) / 2);
 
-    calcWave();
-    renderWave();
-    renderChart();
-    };
+    p.calcWave();
+    p.renderWave();
+    p.renderChart();
+  };
 
   p.windowResized = () => {
     p.resizeCanvas(p.windowWidth, p.windowHeight);
   };
 
-  renderChart = () => {
+  p.renderChart = () => {
     let h = 0;
 
     for (let i=0; i<last.length; i++){
@@ -80,14 +81,14 @@ const moltenBarChart = p => {
 
     for (let i=0; i<last.length; i++){
       let pct = (last[i] / h) * 360;
-      stroke(0, 100 * tmprel);
-      fill(255, 255/(i+1), 0, 200 * tmprel);
-      arc(pos, 75, 225 * tmprel, 225 * tmprel, lastAng, lastAng+radians(pct));
-      lastAng += radians(pct);
+      p.stroke(0, 100 * tmprel);
+      p.fill(255, 255/(i+1), 0, 200 * tmprel);
+      p.arc(pos, 75, 225 * tmprel, 225 * tmprel, lastAng, lastAng+p.radians(pct));
+      lastAng += p.radians(pct);
     }
   }
 
-  calcWave = () => {
+  p.calcWave = () => {
     // Increment theta (try different values for 'angular velocity' here
     theta += 0.02;
 
@@ -103,7 +104,7 @@ const moltenBarChart = p => {
 
       for (let i = 0; i < numLines; i++) {
         // Every other wave is cosine instead of sine
-        let diff = j % 2 == 0 ? sin(x) : cos(x);
+        let diff = j % 2 == 0 ? p.sin(x) : p.cos(x);
         let add = diff*amplitude[j];
 
         last[j] += add;
@@ -117,36 +118,36 @@ const moltenBarChart = p => {
     }
   }
 
-  renderWave = () => {
-    noStroke();
+  p.renderWave = () => {
+    p.noStroke();
 
-    fill(254,60,0, 120 * rel);
-    beginShape();
-    vertex(0,height);
+    p.fill(254,60,0, 120 * rel);
+    p.beginShape();
+    p.vertex(0,height);
     for (let x = 0; x < numLines; x++) {
-      vertex(x*xspacing,height/2+yvalues[x]+-5);
-      vertex((x*xspacing) + 10,height/2+yvalues[x]-5);
+      p.vertex(x*xspacing,height/2+yvalues[x]+-5);
+      p.vertex((x*xspacing) + 10,height/2+yvalues[x]-5);
     }
-    vertex(width,height);
-    endShape(CLOSE);
+    p.vertex(width,height);
+    p.endShape(p.CLOSE);
 
-    fill(255,0,0, 120 * rel);
-    beginShape();
-    vertex(0,height);
+    p.fill(255,0,0, 120 * rel);
+    p.beginShape();
+    p.vertex(0,height);
     for (let x = 0; x < numLines; x++) {
-      vertex(x*xspacing,height/2+yvalues[x]);
-      vertex((x*xspacing) + 10,height/2+yvalues[x]);
+      p.vertex(x*xspacing,height/2+yvalues[x]);
+      p.vertex((x*xspacing) + 10,height/2+yvalues[x]);
     }
-    vertex(width,height);
-    endShape(CLOSE);
+    p.vertex(width,height);
+    p.endShape(p.CLOSE);
 
     //fill(255,0,0,255 - ((x/numLines)*200));
     //rect(x*xspacing,height/2+yvalues[x],10,height*2);
     // - ((1-rel) * 4)
 
     for (let x = 0; x < numLines; x++) {
-      fill(255,0,0,255 - ((x/numLines)*200));
-      rect(x*xspacing,height/2+yvalues[x],10,height*2);
+      p.fill(255,0,0,255 - ((x/numLines)*200));
+      p.rect(x*xspacing,height/2+yvalues[x],10,height*2);
       // - ((1-rel) * 4)
     }
   }
