@@ -29,5 +29,5 @@ const sketch = p => {
   };
 };
 
-new p5(sketch);
+export default sketch;
 

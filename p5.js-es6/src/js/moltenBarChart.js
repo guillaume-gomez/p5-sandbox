@@ -154,4 +154,4 @@ const moltenBarChart = p => {
 
 };
 
-new p5(moltenBarChart);
+export default moltenBarChart;
