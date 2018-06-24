@@ -5,17 +5,16 @@ const pixelise = p => {
   let canvas;
   let slider;
   let img;
-  let width = 600;
-  let height = 335;
+  const slidderHeight = 35;
 
   p.preload = () => {
     img = p.loadImage("assets/worldcup.jpg");
   };
 
   p.setup = () => {
-    canvas = p.createCanvas(width, height);
+    canvas = p.createCanvas(img.width, img.height + slidderHeight);
     slider = p.createSlider(4, 20, 10);
-    slider.position(5, 305);
+    slider.position(5, img.height + 5);
     p.image(img, 0, 0);
   };
 
@@ -23,9 +22,9 @@ const pixelise = p => {
     p.background(255);
     img.loadPixels();
     const stepSize = p.round(slider.value());
-    for (let y = 0; y < height; y += stepSize) {
-      for (let x = 0; x < width; x += stepSize) {
-        const i = y * width + x;
+    for (let y = 0; y < img.height; y += stepSize) {
+      for (let x = 0; x < img.width; x += stepSize) {
+        const i = y * img.width + x;
         const darkness = (255 - img.pixels[i * 4]) / 255;
         const radius = stepSize * darkness;
         p.ellipse(x, y, radius, radius);
