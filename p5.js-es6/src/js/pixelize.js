@@ -16,9 +16,12 @@ const pixelise = p => {
     slider = p.createSlider(4, 20, 10);
     slider.position(5, img.height + 5);
     p.image(img, 0, 0);
+    canvas.drop(p.gotFile);
+    //p.noLoop();
   };
 
   p.draw = () => {
+    console.log("sjdkgjk")
     p.background(255);
     img.loadPixels();
     const stepSize = p.round(slider.value());
@@ -37,6 +40,19 @@ const pixelise = p => {
     p.resizeCanvas(p.windowWidth, p.windowHeight);
     p.image(img, 0, 0);
   };
+
+  p.gotFile = (file) => {
+    console.log("biod")
+    // If it's an image file
+    if (file.type === 'image') {
+      // Create an image DOM element but don't show it
+      img = p.loadImage(file.data);
+      // Draw the image onto the canvas
+      p.image(img, 0, 0);
+    } else {
+      println('Not an image file!');
+    }
+  }
 };
 
 export default pixelise;
