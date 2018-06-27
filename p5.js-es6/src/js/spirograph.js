@@ -64,7 +64,7 @@ const spirograph = p => {
       }
       p.pop(); // go down one level
       p.translate(0, radius); // move into position for next sine
-      sines[i] = (sines[i]+(fund+(fund*i*ratio)))%TWO_PI; // update angle based on fundamental
+      sines[i] = (sines[i] + (fund + (fund * i * ratio))) % p.TWO_PI; // update angle based on fundamental
     }
 
     p.pop(); // pop down final transformation
