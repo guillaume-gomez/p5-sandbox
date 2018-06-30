@@ -33,14 +33,16 @@ const toThirdDimension = p => {
           let x = i*cellsize + cellsize/2; // x position
           let y = j*cellsize + cellsize/2; // y position
           let loc = x + y * width;           // Pixel array location
-          const c = img.pixels[loc];       // Grab the color
+          const r = img.pixels[loc];       // Grab the color
+          const g = img.pixels[loc + 1 ];
+          const b = img.pixels[loc + 2 ];
           // Calculate a z position as a function of mouseX and pixel brightness
-          const color = p.color(c, c, c);
+          const color = p.color(r,g, b);
           const z = (p.mouseX / width) * p.brightness(color) - 100.0;
           // Translate to the location, set fill and stroke, and draw the rect
           p.push();
           p.translate(x ,y , z);
-          p.fill(c);
+          p.fill(color);
           p.noStroke();
           p.rectMode(p.CENTER);
           p.rect(0, 0, cellsize, cellsize);
