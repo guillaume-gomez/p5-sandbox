@@ -33,7 +33,7 @@ const pixelise = p => {
         p.ellipse(x, y, radius, radius);
       }
     }
-    p.text("radius", slider.x * 3 + slider.width, 320);
+    p.text("radius", slider.x * 3 + slider.width, img.height + slidderHeight - 15);
   };
 
   p.sliderUpdated = () => {
@@ -41,18 +41,20 @@ const pixelise = p => {
   }
 
   p.windowResized = () => {
-    p.resizeCanvas(p.windowWidth, p.windowHeight);
+    p.resizeCanvas(img.width, img.height + slidderHeight);
+    slider.position(5, img.height + 5);
     p.image(img, 0, 0);
+    p.redraw();
   };
 
   p.gotFile = (file) => {
-    console.log("biod")
     // If it's an image file
     if (file.type === 'image') {
       // Create an image DOM element but don't show it
       img = p.loadImage(file.data);
       // Draw the image onto the canvas
       p.image(img, 0, 0);
+      p.windowResized();
     } else {
       println('Not an image file!');
     }
