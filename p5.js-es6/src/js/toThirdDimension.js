@@ -6,7 +6,7 @@ const toThirdDimension = p => {
   let img;
   const width = 200;
   const height = 200;
-  const cellsize = 2;
+  const cellsize = 4;
   let cols;
   let rows;
 
@@ -16,8 +16,7 @@ const toThirdDimension = p => {
   };
 
   p.setup = () => {
-    canvas = p.createCanvas(width, height);
-    p.image(img, 0, 0);
+    canvas = p.createCanvas(width, height, p.WEBGL);
     cols = width / cellsize;             // Calculate # of columns
     rows = height / cellsize;            // Calculate # of rows
     //p.noLoop();
@@ -30,9 +29,9 @@ const toThirdDimension = p => {
     for ( let i = 0; i < cols;i++) {
       // Begin loop for rows
       for ( let j = 0; j < rows;j++) {
-          let x = i*cellsize + cellsize/2; // x position
-          let y = j*cellsize + cellsize/2; // y position
-          let loc = x + y * width;           // Pixel array location
+          let x = i * cellsize + cellsize/2; // x position
+          let y = j * cellsize + cellsize/2; // y position
+          let loc = (x + y * img.width) * 4;           // Pixel array location
           const r = img.pixels[loc];       // Grab the color
           const g = img.pixels[loc + 1 ];
           const b = img.pixels[loc + 2 ];
@@ -41,7 +40,7 @@ const toThirdDimension = p => {
           const z = (p.mouseX / width) * p.brightness(color) - 100.0;
           // Translate to the location, set fill and stroke, and draw the rect
           p.push();
-          p.translate(x ,y , z);
+          p.translate(x - width/2 ,y - height/2 , z);
           p.fill(color);
           p.noStroke();
           p.rectMode(p.CENTER);
@@ -53,7 +52,6 @@ const toThirdDimension = p => {
 
   p.windowResized = () => {
     p.resizeCanvas(p.windowWidth, p.windowHeight);
-    p.image(img, 0, 0);
   };
 
   p.keyPressed = () => {
