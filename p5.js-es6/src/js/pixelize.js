@@ -25,6 +25,7 @@ const pixelise = p => {
     p.background(255);
     img.loadPixels();
     const stepSize = p.round(slider.value());
+    console.log(img.height)
     for (let y = 0; y < img.height; y += stepSize) {
       for (let x = 0; x < img.width; x += stepSize) {
         const i = y * img.width + x;
@@ -40,11 +41,15 @@ const pixelise = p => {
     p.redraw();
   }
 
-  p.windowResized = () => {
+  p.reload = () => {
     p.resizeCanvas(img.width, img.height + slidderHeight);
     slider.position(5, img.height + 5);
-    p.image(img, 0, 0);
     p.redraw();
+  }
+
+  p.windowResized = () => {
+    console.log("windowResized")
+    p.reload();
   };
 
   p.gotFile = (file) => {
@@ -52,9 +57,12 @@ const pixelise = p => {
     if (file.type === 'image') {
       // Create an image DOM element but don't show it
       img = p.loadImage(file.data);
-      // Draw the image onto the canvas
       p.image(img, 0, 0);
-      p.windowResized();
+      setTimeout(()=> {
+        p.reload();
+        p.redraw();
+        
+      }, 2500);
     } else {
       println('Not an image file!');
     }
