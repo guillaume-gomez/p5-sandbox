@@ -56,12 +56,13 @@ const pixelise = p => {
     // If it's an image file
     if (file.type === 'image') {
       // Create an image DOM element but don't show it
+      p.background(255);
       img = p.loadImage(file.data);
       p.image(img, 0, 0);
+      p.text("processing...", canvas.width / 2, canvas.height / 2);
       setTimeout(()=> {
         p.reload();
         p.redraw();
-        
       }, 2500);
     } else {
       println('Not an image file!');
