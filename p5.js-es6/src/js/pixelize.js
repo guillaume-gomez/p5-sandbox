@@ -6,13 +6,14 @@ const pixelise = p => {
   let slider;
   let img;
   const slidderHeight = 35;
+  const helperHeight = 30;
 
   p.preload = () => {
     img = p.loadImage("assets/worldcup.jpg");
   };
 
   p.setup = () => {
-    canvas = p.createCanvas(img.width, img.height + slidderHeight);
+    canvas = p.createCanvas(img.width, img.height + slidderHeight + helperHeight);
     slider = p.createSlider(4, 20, 10);
     slider.position(5, img.height + 5);
     slider.input(p.sliderUpdated);
@@ -35,6 +36,7 @@ const pixelise = p => {
       }
     }
     p.text("radius", slider.x * 3 + slider.width, img.height + slidderHeight - 15);
+    p.text("Please drag and drog new image", 10, img.height + slidderHeight + helperHeight - 10);
   };
 
   p.sliderUpdated = () => {
