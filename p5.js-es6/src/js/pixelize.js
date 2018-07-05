@@ -20,6 +20,7 @@ const pixelise = p => {
     p.image(img, 0, 0);
     canvas.drop(p.gotFile);
     p.noLoop();
+    p.textSize(18);
   };
 
   p.draw = () => {
@@ -62,7 +63,8 @@ const pixelise = p => {
       img = p.loadImage(file.data);
       p.image(img, 0, 0);
       p.text("processing...", canvas.width / 2, canvas.height / 2);
-      setTimeout(()=> {
+      p.text("radius", slider.x * 3 + slider.width, canvas.height + slidderHeight - 15);
+      setTimeout(() => {
         p.reload();
         p.redraw();
       }, 2500);
