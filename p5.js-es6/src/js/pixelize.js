@@ -41,6 +41,7 @@ const pixelise = p => {
         p.ellipse(x, y, radius, radius);
       }
     }
+    console.log(canvas)
     p.text("radius", slider.x * 3 + slider.width, img.height + slidderHeight - 15);
     p.text("Please drag and drog new image", 10, img.height + slidderHeight + helperHeight - 10);
   };
@@ -79,7 +80,8 @@ const pixelise = p => {
   }
 
   p.exportImage = () => {
-    saveCanvas(canvas, "export.png");
+    p.saveCanvas(canvas, "export.png");
+    //saveImage(canvas, 1200, 700, false)
   }
 };
 
