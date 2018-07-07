@@ -1,9 +1,11 @@
 import '../css/style.scss';
+import { saveImage } from "./toPng";
 
 // basic demo
 const pixelise = p => {
   let canvas;
   let slider;
+  let exportButton;
   let img;
   const slidderHeight = 35;
   const helperHeight = 30;
@@ -17,6 +19,10 @@ const pixelise = p => {
     slider = p.createSlider(4, 20, 10);
     slider.position(5, img.height + 5);
     slider.input(p.sliderUpdated);
+    exportButton = p.createButton('click me');
+    exportButton.position(300, img.height + 5);
+    exportButton.mousePressed(p.exportImage);
+
     p.image(img, 0, 0);
     canvas.drop(p.gotFile);
     p.noLoop();
@@ -27,7 +33,6 @@ const pixelise = p => {
     p.background(255);
     img.loadPixels();
     const stepSize = p.round(slider.value());
-    console.log(img.height)
     for (let y = 0; y < img.height; y += stepSize) {
       for (let x = 0; x < img.width; x += stepSize) {
         const i = y * img.width + x;
@@ -71,6 +76,10 @@ const pixelise = p => {
     } else {
       println('Not an image file!');
     }
+  }
+
+  p.exportImage = () => {
+    saveCanvas(canvas, "export.png");
   }
 };
 
