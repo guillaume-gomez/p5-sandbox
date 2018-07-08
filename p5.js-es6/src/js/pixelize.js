@@ -17,10 +17,10 @@ const pixelise = p => {
   p.setup = () => {
     canvas = p.createCanvas(img.width, img.height + slidderHeight + helperHeight);
     slider = p.createSlider(4, 20, 10);
-    slider.position(5, img.height + 5);
+    slider.position(5, img.height + 10);
     slider.input(p.sliderUpdated);
-    exportButton = p.createButton('click me');
-    exportButton.position(300, img.height + 5);
+    exportButton = p.createButton('export to png');
+    exportButton.position(300, img.height + 10);
     exportButton.mousePressed(p.exportImage);
 
     p.image(img, 0, 0);
@@ -41,7 +41,6 @@ const pixelise = p => {
         p.ellipse(x, y, radius, radius);
       }
     }
-    console.log(canvas)
     p.text("radius", slider.x * 3 + slider.width, img.height + slidderHeight - 15);
     p.text("Please drag and drog new image", 10, img.height + slidderHeight + helperHeight - 10);
   };
@@ -53,6 +52,7 @@ const pixelise = p => {
   p.reload = () => {
     p.resizeCanvas(img.width, img.height + slidderHeight);
     slider.position(5, img.height + 5);
+    exportButton.position(300, img.height + 5);
     p.redraw();
   }
 
@@ -80,8 +80,21 @@ const pixelise = p => {
   }
 
   p.exportImage = () => {
-    p.saveCanvas(canvas, "export.png");
-    //saveImage(canvas, 1200, 700, false)
+    let pg = p.createGraphics(img.width, img.height);
+    pg.background(255);
+    pg.fill(0,0,0);
+    img.loadPixels();
+    const stepSize = p.round(slider.value());
+    // add one iteration in each axis to make sure there are not 'blank' spaces
+    for (let y = 0; y < img.height + stepSize; y += stepSize) {
+      for (let x = 0; x < img.width + stepSize; x += stepSize) {
+        const i = y * img.width + x;
+        const darkness = (255 - img.pixels[i * 4]) / 255;
+        const radius = stepSize * darkness;
+        pg.ellipse(x, y, radius, radius);
+      }
+    }
+    p.save(pg, "export.png");
   }
 };
 
