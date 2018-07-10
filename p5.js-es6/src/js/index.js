@@ -5,8 +5,9 @@ import '../css/style.scss';
 
 /*import sketch from "./sketch";
 import pointillism from "./pointillism";
-import pixelize from "./pixelize";
 import gameOfLife from "./gameOfLife";
-*/import spirograph from "./spirograph";
-
-new p5(spirograph);
+*/
+import spirograph from "./spirograph";
+import pixelize from "./pixelize";
+import toThirdDimension from "./toThirdDimension";
+new p5(pixelize);
