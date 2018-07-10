@@ -1,10 +1,12 @@
 import '../css/style.scss';
 import { saveImage } from "./toPng";
+import colorPicker from "./colorPicker";
 
 // basic demo
 const pixelise = p => {
   let canvas;
   let radiusSlider;
+  let colorPickerSlider;
   let exportButton;
   let img;
   const slidderHeight = 35;
@@ -19,6 +21,10 @@ const pixelise = p => {
     radiusSlider = p.createSlider(4, 20, 10);
     radiusSlider.position(5, img.height + 10);
     radiusSlider.input(p.radiusSliderUpdated);
+
+    //init colorPicker
+    colorPicker(p);
+    colorPickerSlider = p.createColorPicker(5, 370, "#3478FF");
 
     exportButton = p.createButton('export to png');
     exportButton.position(300, img.height + 10);
@@ -83,7 +89,7 @@ const pixelise = p => {
   p.exportImage = () => {
     let pg = p.createGraphics(img.width, img.height);
     pg.background(255);
-    pg.fill(0,0,0);
+    pg.fill(0, 0, 0);
     img.loadPixels();
     const stepSize = p.round(radiusSlider.value());
     // add one iteration in each axis to make sure there are not 'blank' spaces
