@@ -1,10 +1,12 @@
 import '../css/style.scss';
 import { saveImage } from "./toPng";
+import colorPicker from "./colorPicker";
 
 // basic demo
 const pixelise = p => {
   let canvas;
-  let slider;
+  let radiusSlider;
+  let colorPickerSlider;
   let exportButton;
   let img;
   const slidderHeight = 35;
@@ -16,9 +18,13 @@ const pixelise = p => {
 
   p.setup = () => {
     canvas = p.createCanvas(img.width, img.height + slidderHeight + helperHeight);
-    slider = p.createSlider(4, 20, 10);
-    slider.position(5, img.height + 10);
-    slider.input(p.sliderUpdated);
+    radiusSlider = p.createSlider(4, 20, 10);
+    radiusSlider.position(5, img.height + 10);
+    radiusSlider.input(p.radiusSliderUpdated);
+
+    colorPickerSlider = p.createInput('#ff00ff', 'color');
+    colorPickerSlider.input(p.colorPickerSliderUpdated);
+
     exportButton = p.createButton('export to png');
     exportButton.position(300, img.height + 10);
     exportButton.mousePressed(p.exportImage);
@@ -32,7 +38,9 @@ const pixelise = p => {
   p.draw = () => {
     p.background(255);
     img.loadPixels();
-    const stepSize = p.round(slider.value());
+    p.fill(colorPickerSlider.value());
+    p.stroke(colorPickerSlider.value());
+    const stepSize = p.round(radiusSlider.value());
     for (let y = 0; y < img.height; y += stepSize) {
       for (let x = 0; x < img.width; x += stepSize) {
         const i = y * img.width + x;
@@ -41,17 +49,23 @@ const pixelise = p => {
         p.ellipse(x, y, radius, radius);
       }
     }
-    p.text("radius", slider.x * 3 + slider.width, img.height + slidderHeight - 15);
+    p.fill(0, 0, 0);
+    p.stroke(0, 0, 0);
+    p.text("radius", radiusSlider.x * 3 + radiusSlider.width, img.height + slidderHeight - 15);
     p.text("Please drag and drog new image", 10, img.height + slidderHeight + helperHeight - 10);
   };
 
-  p.sliderUpdated = () => {
+  p.radiusSliderUpdated = () => {
+    p.redraw();
+  }
+
+  p.colorPickerSliderUpdated = () => {
     p.redraw();
   }
 
   p.reload = () => {
     p.resizeCanvas(img.width, img.height + slidderHeight);
-    slider.position(5, img.height + 5);
+    radiusSlider.position(5, img.height + 5);
     exportButton.position(300, img.height + 5);
     p.redraw();
   }
@@ -69,7 +83,7 @@ const pixelise = p => {
       img = p.loadImage(file.data);
       p.image(img, 0, 0);
       p.text("processing...", canvas.width / 2, canvas.height / 2);
-      p.text("radius", slider.x * 3 + slider.width, canvas.height + slidderHeight - 15);
+      p.text("radius", radiusSlider.x * 3 + radiusSlider.width, canvas.height + slidderHeight - 15);
       setTimeout(() => {
         p.reload();
         p.redraw();
@@ -82,9 +96,9 @@ const pixelise = p => {
   p.exportImage = () => {
     let pg = p.createGraphics(img.width, img.height);
     pg.background(255);
-    pg.fill(0,0,0);
+    pg.fill(0, 0, 0);
     img.loadPixels();
-    const stepSize = p.round(slider.value());
+    const stepSize = p.round(radiusSlider.value());
     // add one iteration in each axis to make sure there are not 'blank' spaces
     for (let y = 0; y < img.height + stepSize; y += stepSize) {
       for (let x = 0; x < img.width + stepSize; x += stepSize) {
