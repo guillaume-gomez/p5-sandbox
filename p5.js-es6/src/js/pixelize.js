@@ -22,9 +22,8 @@ const pixelise = p => {
     radiusSlider.position(5, img.height + 10);
     radiusSlider.input(p.radiusSliderUpdated);
 
-    //init colorPicker
-    colorPicker(p);
-    colorPickerSlider = p.createColorPicker(5, 370, "#3478FF");
+    colorPickerSlider = p.createInput('#ff00ff', 'color');
+    colorPickerSlider.input(p.colorPickerSliderUpdated);
 
     exportButton = p.createButton('export to png');
     exportButton.position(300, img.height + 10);
@@ -39,6 +38,8 @@ const pixelise = p => {
   p.draw = () => {
     p.background(255);
     img.loadPixels();
+    p.fill(colorPickerSlider.value());
+    p.stroke(colorPickerSlider.value());
     const stepSize = p.round(radiusSlider.value());
     for (let y = 0; y < img.height; y += stepSize) {
       for (let x = 0; x < img.width; x += stepSize) {
@@ -48,11 +49,17 @@ const pixelise = p => {
         p.ellipse(x, y, radius, radius);
       }
     }
+    p.fill(0, 0, 0);
+    p.stroke(0, 0, 0);
     p.text("radius", radiusSlider.x * 3 + radiusSlider.width, img.height + slidderHeight - 15);
     p.text("Please drag and drog new image", 10, img.height + slidderHeight + helperHeight - 10);
   };
 
   p.radiusSliderUpdated = () => {
+    p.redraw();
+  }
+
+  p.colorPickerSliderUpdated = () => {
     p.redraw();
   }
 
