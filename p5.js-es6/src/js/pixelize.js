@@ -39,18 +39,24 @@ const pixelise = p => {
     p.background(255);
     img.loadPixels();
     p.fill(colorPickerSlider.value());
-    p.stroke(colorPickerSlider.value());
+    p.noStroke();
     const stepSize = p.round(radiusSlider.value());
     for (let y = 0; y < img.height; y += stepSize) {
       for (let x = 0; x < img.width; x += stepSize) {
         const i = y * img.width + x;
         const darkness = (255 - img.pixels[i * 4]) / 255;
         const radius = stepSize * darkness;
+        if(averageColor) {
+          const color = img.get(x, y);
+          const r = p.red(color);
+          const g = p.green(color);
+          const b = p.blue(color);
+          p.fill(r, g, b);
+        }
         p.ellipse(x, y, radius, radius);
       }
     }
     p.fill(0, 0, 0);
-    p.stroke(0, 0, 0);
     p.text("radius", radiusSlider.x * 3 + radiusSlider.width, img.height + slidderHeight - 15);
     p.text("Please drag and drog new image", 10, img.height + slidderHeight + helperHeight - 10);
   };
