@@ -1,16 +1,16 @@
 import '../css/style.scss';
-import { saveImage } from "./toPng";
-import colorPicker from "./colorPicker";
 
 // basic demo
 const pixelise = p => {
   let canvas;
   let radiusSlider;
   let colorPickerSlider;
+  let checkbox;
   let exportButton;
   let img;
   const slidderHeight = 35;
   const helperHeight = 30;
+  let averageColor = false;
 
   p.preload = () => {
     img = p.loadImage("assets/worldcup.jpg");
@@ -24,6 +24,9 @@ const pixelise = p => {
 
     colorPickerSlider = p.createInput('#ff00ff', 'color');
     colorPickerSlider.input(p.colorPickerSliderUpdated);
+
+    checkbox = p.createCheckbox();
+    checkbox.input(p.onChangeCheckbox);
 
     exportButton = p.createButton('export to png');
     exportButton.position(300, img.height + 10);
@@ -66,6 +69,11 @@ const pixelise = p => {
   }
 
   p.colorPickerSliderUpdated = () => {
+    p.redraw();
+  }
+
+  p.onChangeCheckbox = () => {
+    averageColor = !averageColor;
     p.redraw();
   }
 
