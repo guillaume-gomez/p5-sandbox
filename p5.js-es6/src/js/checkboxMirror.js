@@ -4,6 +4,7 @@ import '../css/style.scss';
 const checkboxMirror = p => {
   let canvas;
   let img;
+  let slider;
   const vScale = 4;
   const width = 600;
   const height = 300;
@@ -16,6 +17,9 @@ const checkboxMirror = p => {
     canvas = p.createCanvas(width, height);
     p.image(img, 0, 0);
     p.noStroke();
+    p.noLoop();
+    slider = p.createSlider(0, 255, 127);
+    slider.input(p.onThresholdChange);
   };
 
   p.draw = () => {
@@ -29,7 +33,7 @@ const checkboxMirror = p => {
         const b = img.pixels[(index * 4) + 2];
 
         const bright = (r + g + b) / 3;
-        const threshold = 127;
+        const threshold = slider.value();
         if(bright > threshold) {
           p.fill(255);
         } else {
@@ -42,6 +46,10 @@ const checkboxMirror = p => {
       }
     }
   };
+
+  p.onThresholdChange = () => {
+    p.redraw();
+  }
 
   p.windowResized = () => {
     //p.resizeCanvas(p.windowWidth, p.windowHeight);
