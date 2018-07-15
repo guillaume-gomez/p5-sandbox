@@ -33,7 +33,7 @@ const spirograph = p => {
   p.draw = () => {
     if (!trace) {
       p.background(204); // clear screen if showing geometry
-      p.stroke(0, 255); // black pen
+      p.stroke(0, 13, 76, 89); // blue pen
       p.noFill(); // don't fill
     }
 
