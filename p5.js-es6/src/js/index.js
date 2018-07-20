@@ -9,4 +9,6 @@ import spirograph from "./spirograph";
 import pixelize from "./pixelize";
 import toThirdDimension from "./toThirdDimension";
 import checkboxMirror from "./checkboxMirror";
-new p5(checkboxMirror);
+import terrain from "./terrain";
+import cubeWaveBee from "./cubeWaveBee";
+new p5(cubeWaveBee);
