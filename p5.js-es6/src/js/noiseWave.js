@@ -1,3 +1,5 @@
+import '../css/style.scss';
+
 const noiseWave = p => {
   let canvas;
   let yoff = 0.0;
