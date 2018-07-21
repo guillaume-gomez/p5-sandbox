@@ -5,7 +5,7 @@ const cubeWaveBee = p => {
   const width = 400;
   const height = 400;
   let angle = 0;
-  const minWidth = 24;
+  let minWidth = 24;
   let magicAngle = p.atan(p.cos(p.QUARTER_PI));
   let maxDistance = p.dist(0, 0, 200, 200);
 
@@ -42,7 +42,17 @@ const cubeWaveBee = p => {
     p.resizeCanvas(width, height);
   };
 
-  p.keyPressed = () => {
+  p.keyPressed = (e) => {
+    console.log(e.key)
+    if( e.key === "ArrowUp") {
+      if(minWidth < 50) {
+        minWidth = minWidth + 1;
+      }
+    } else if (e.key === "ArrowDown") {
+      if(minWidth > 10) {
+        minWidth = minWidth - 1;
+      }
+    }
   };
 };
 
