@@ -4,7 +4,7 @@
   "description": "Boilerplate for writing p5.js sketches in es6 with babel, webpack and sass.",
   "scripts": {
     "clean": "rimraf dist",
-    "dev": "webpack-dev-server --progress --colors --inline --hot --open",
+    "dev": "npx webpack --watch",
     "prebuild": "npm install",
     "build": "npm run clean && webpack --progress --colors -p"
   },
