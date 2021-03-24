@@ -10,4 +10,13 @@ import toThirdDimension from "./toThirdDimension";
 import checkboxMirror from "./checkboxMirror";
 import terrain from "./terrain";
 import cubeWaveBee from "./cubeWaveBee";
+
+new p5(sketch);
+new p5(pointillism);
+new p5(gameOfLife);
+new p5(spirograph);
+new p5(pixelize);
+new p5(toThirdDimension);
+new p5(checkboxMirror);
 new p5(terrain);
+new p5(cubeWaveBee);

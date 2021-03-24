@@ -5,8 +5,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "npx webpack --watch",
-    "prebuild": "npm install",
-    "build": "npm run clean && webpack --progress --colors -p"
+    "prebuild": "yarn install",
+    "build": "yarn run clean && webpack --progress --colors -p"
   },
   "repository": {
     "type": "git",
